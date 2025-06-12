@@ -7,11 +7,23 @@
     <style>
         body {
             background-color: white;
-            text-align: center;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 40px; /* space for bottom bar */
+        }
+
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -20,6 +32,7 @@
             padding: 20px;
             max-width: 100vw;
         }
+
         .box {
             border: 3px solid #000;
             padding: 10px;
@@ -28,6 +41,7 @@
             text-align: center;
             border-radius: 10px;
         }
+
         .photo {
             width: 200px;
             height: 250px;
@@ -35,14 +49,22 @@
             border-radius: 10px;
             border: none;
         }
+
         .input-container {
             margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
         }
+
         input {
             padding: 10px;
             font-size: 16px;
             text-transform: uppercase;
+            width: 250px;
         }
+
         .btn {
             padding: 12px 24px;
             font-size: 16px;
@@ -55,9 +77,11 @@
             transition: all 0.3s ease-in-out;
             text-transform: uppercase;
         }
+
         .btn:hover {
             background: linear-gradient(135deg, #FF8C00, #FFA500);
         }
+
         .btn:active {
             transform: translateY(1px);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -69,6 +93,7 @@
             width: 80px;
             margin: 20px auto;
         }
+
         .loader div {
             width: 16px;
             height: 16px;
@@ -76,6 +101,7 @@
             border-radius: 50%;
             animation: bounce 1.5s infinite ease-in-out;
         }
+
         .loader div:nth-child(1) { animation-delay: 0s; }
         .loader div:nth-child(2) { animation-delay: 0.2s; }
         .loader div:nth-child(3) { animation-delay: 0.4s; }
@@ -85,10 +111,10 @@
             40% { transform: scale(1); opacity: 1; }
         }
 
-
         .pagination {
             margin-top: 20px;
         }
+
         .pagination button {
             padding: 10px 20px;
             font-size: 16px;
@@ -100,31 +126,79 @@
             border-radius: 5px;
             transition: all 0.3s;
         }
+
         .pagination button:hover {
             background: #ff9800;
             color: white;
         }
+
+        marquee {
+            background-color: orange;
+            height: 30px;
+            line-height: 30px;
+            width: 100%;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #f2f2f2;
+        }
+
+        footer a {
+            color: #FF8C00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer p {
+            margin: 5px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-    <img style="height: 120px; width: 100%; max-width: 1100px;" src="https://examsection.acet.ac.in/Images/header.jpg">
+    <div style="text-align: center;">
+        <img style="height: 120px; width: 100%; max-width: 1100px;" src="https://examsection.acet.ac.in/Images/header.jpg">
+    </div>
     <hr>
-    <h3>STUDENT PHOTOS</h3>
-    <p>Enter Roll Number Prefix (e.g., 23MH1A49) to generate student photos.</p>
-    <div class="input-container">
-        <input type="text" id="rollNumberInput" placeholder="Enter Roll Number Prefix" onkeypress="handleKeyPress(event)">
-        <button class="btn" onclick="generatePhotos()">Generate Photos</button>
-    </div>
-    <div class="loader" id="loader">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="container" id="photoContainer"></div>
-    <div class="pagination" id="pagination"></div>
 
-    <marquee style="background-color: orange; height: 30px;">Thank you for visiting our page! We hope you find it useful and informative.</marquee>
-   <!-- <p>"Now displaying both Regular & Lateral Entry (LE) student photos!"</p> -->
+    <div class="main-content">
+        <h3>STUDENT PHOTOS</h3>
+        <p>Enter Roll Number Prefix (e.g., 23MH1A49) to generate student photos.</p>
+
+        <div class="input-container">
+            <input type="text" id="rollNumberInput" placeholder="Enter Roll Number Prefix" onkeypress="handleKeyPress(event)">
+            <button class="btn" onclick="generatePhotos()">Generate Photos</button>
+        </div>
+
+        <div class="loader" id="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div class="container" id="photoContainer"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <marquee>Thank you for visiting our page! We hope you find it useful and informative.</marquee>
+
+    <!-- Footer section -->
+    <footer>
+        <p>
+            Webpage created by 
+            <a href="https://www.linkedin.com/in/v-v-satya-sai-datta-manikanta-gowthu-41709b291" 
+               target="_blank">
+               Datta
+            </a>
+        </p>
+        <p>Source: Images are fetched from the official <a href="https://acet.ac.in/" target="_blank">ACET student photo portal</a></p>
+    </footer>
 
     <script>
         let validImages = [];
@@ -150,7 +224,6 @@
 
             if (prefix.length === 10) {
                 let imageUrl = `https://info.aec.edu.in/acet/studentPhotos/${prefix}.jpg`;
-                
                 if (prefix.substring(2,4) === "A9") {
                     imageUrl = `https://info.aec.edu.in/AEC/studentPhotos/${prefix}.jpg`;
                 }
@@ -169,7 +242,7 @@
                 alert("Please enter a valid roll number prefix (e.g., 23MH1A49).");
                 return;
             }
-        
+
             loader.style.display = "flex";
 
             let rollNumbers = [];
@@ -192,7 +265,7 @@
             validImages = results.filter(result => result.status === "fulfilled" && result.value !== null).map(result => result.value);
 
             loader.style.display = "none";
-            
+
             if (validImages.length === 0) {
                 container.innerHTML = "<p>No photos found.</p>";
                 return;
@@ -228,13 +301,11 @@
                 button.onclick = function () {
                     currentPage = i;
                     displayPhotos();
-                    // window.scrollTo({ top: 0, behavior: 'smooth' });
                     window.scrollTo(0, 0);
                 };
                 pagination.appendChild(button);
             }
         }
-        
 
         function generateRollNumbers(basePrefix) {
             let rollNumbers = [];
@@ -257,13 +328,11 @@
             return year.toString() + branchCode + "5" + prefix.substring(5);
         }
 
-        
         function handleKeyPress(event) {
             if (event.key === "Enter") {
                 generatePhotos();
             }
         }
-       
     </script>
 </body>
 </html>
